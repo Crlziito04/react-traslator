@@ -1,15 +1,26 @@
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
 import { useStore } from "./hooks/useStore";
-import { Container, Row, Col, Button, Form, Stack } from "react-bootstrap";
+import { Container, Row, Col, Button, Stack } from "react-bootstrap";
 import { ArrowIcon } from "./components/Icons";
 import { AUTO_LANG } from "./constants";
 import { LanguageSelector } from "./components/LanguageSelector";
 import { SectionType } from "./type.d";
+import { TextArea } from "./components/TextArea";
 
 function App() {
-  const { fromLanguage, interchangeLang, toLanguage, setFromLang, setToLang } =
-    useStore();
+  const {
+    fromLanguage,
+    fromText,
+    result,
+    interchangeLang,
+    toLanguage,
+    setFromLang,
+    setToLang,
+    setFromText,
+    setResult,
+    loading,
+  } = useStore();
 
   return (
     <Container fluid>
@@ -24,11 +35,11 @@ function App() {
               value={fromLanguage}
               onChange={setFromLang}
             />
-            <Form.Control
-              as="textarea"
-              placeholder="Introducir Texto"
-              autoFocus
-              style={{ height: "150px" }}
+            <TextArea
+              type={SectionType.From}
+              value={fromText}
+              onChange={setFromText}
+              loading={loading}
             />
           </Stack>
         </Col>
@@ -51,10 +62,11 @@ function App() {
               value={toLanguage}
               onChange={setToLang}
             />
-            <Form.Control
-              as="textarea"
-              placeholder="Traduccion"
-              style={{ height: "150px" }}
+            <TextArea
+              type={SectionType.To}
+              value={result}
+              onChange={setResult}
+              loading={loading}
             />
           </Stack>
         </Col>
